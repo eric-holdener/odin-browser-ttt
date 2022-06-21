@@ -1,5 +1,5 @@
 const Gameboard = (() => {
-  let board = Array.apply(null, Array(9)).map(function () {});
+  let board = Array.apply('', Array(9)).map(function () {});
 
   const checkWinner = () => {
     if(board[0] == board[1] == board[2]) {
@@ -30,7 +30,7 @@ const Gameboard = (() => {
   };
 
   const checkValid = (index) => {
-    if(board[index] === null) {
+    if(board[index] === '') {
       return true;
     } else {
       return false;
@@ -53,12 +53,20 @@ const DisplayController = (() => {
     row3.classList.add('row');
     row3.setAttribute('id', 'row3');
 
+    board.board.forEach(function (item, index) {
+      tile = boardStyling(item, index);
+      if(index < 3) {
+        row1.appendChild(tile);
+      } else if(index >= 3 && index < 6) {
+        row2.appendChild(tile);
+      } else {
+        row3.appendChild(tile);
+      }
+    });
+
     container.appendChild(row1);
     container.appendChild(row2);
     container.appendChild(row3);
-    board.board.forEach(function (item, index) {
-      boardStyling(item, index);
-    });
   };
 
   const changeTile = (tile, index) => {
@@ -76,6 +84,10 @@ const DisplayController = (() => {
     context.classList.add('card-text');
     context.dataset.id = index;
     context.innerHTML = tile;
+
+    card.appendChild(context);
+    column.appendChild(card);
+    return column;
   };
 
   return { initializeBoard, changeTile };
@@ -93,6 +105,14 @@ document.getElementById('new-game-button').addEventListener('click', function() 
   player_1 = Player(1);
   player_2 = Player(2);
   display = DisplayController;
+
+  container = document.getElementById('gamecontainer');
+
+  if(container.childNodes.length > 0) {
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    };
+  };
 
   display.initializeBoard(board);
 });
