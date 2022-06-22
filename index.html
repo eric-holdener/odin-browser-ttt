@@ -10,6 +10,21 @@
 </head>
 <body>
   <h1>Tic Tac Toe</h1>
+  <div class="modal fade" id="winnerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="winnerModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modalHeader">
+
+        </div>
+        <div class="modal-body">
+          <p class="modal-text">Would you like to play again?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" id="modal-play-again" data-bs-dismiss="modal" aria-label="close">Play Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container" id="gamecontainer"></div>
   <div class="row">
     <div class="col" id="game-button">

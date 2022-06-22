@@ -75,13 +75,42 @@ const Player = (() => {
 })();
 
 const Modal = (() => {
-  function displayPlayer(player) {
+  const myModal = new bootstrap.Modal(document.getElementById('winnerModal'), {
+    backdrop: 'static'
+  })
+  console.log(myModal);
+  let modalHeader = document.getElementById('modalHeader');
+  let winnerMessage = document.createElement('h2');
+  winnerMessage.classList.add('modal-title');
 
+  let playAgainButton = document.getElementById('new-game-button');
+  playAgainButton.addEventListener('click', function() {
+    myModal.show();
+  });
+  function displayPlayer(player) {
+    removeOldText();
+    console.log(player);
+    if (player == 1) {
+      winnerMessage.innerHTML = "Player X wins!";
+    } else if (player == 2) {
+      winnerMessage.innerHTML = "Player O wins!";
+    }
+    modalHeader.appendChild(winnerMessage);
+    myModal.show();
   };
 
   function displayTie() {
-
+    removeOldText();
+    winnerMessage.innerHTML = "Tie game!";
+    modalHeader.appendChild(winnerMessage);
+    myModal.show();
   };
+
+  function removeOldText() {
+    if (modalHeader.firstChild) {
+      modalHeader.firstChild.remove();
+    };
+  }
 
   return { displayPlayer, displayTie };
 })();
@@ -108,8 +137,6 @@ const Game = (() => {
   let player2 = playerFactory('player 2', 'assets/o.png', 'Y wins');
   Gameboard.init();
   let gameboard = Gameboard.gameboard;
-  console.log(gameboard);
-  console.log(gameboard[0]);
 
   document.getElementById('new-game-button').remove();
 
@@ -133,9 +160,9 @@ const Game = (() => {
             turn = Player.SECOND;
             e.target.dataset.player = Player.FIRST;
             round++;
-            if(checkWinner) {
-              // player 1 wins
-            }
+            if(checkWinner() === true) {
+              Modal.displayPlayer(1);
+            };
           }
           break;
         case Player.SECOND:
@@ -143,52 +170,61 @@ const Game = (() => {
             turn = Player.FIRST;
             e.target.dataset.player = Player.SECOND;
             round++;
-            if(checkWinner) {
-              // player 2 wins
-            }
+            if(checkWinner() === true) {
+              Modal.displayPlayer(2)
+            };
           }
 
       };
     } else {
-      // display tie message
+      Modal.displayTie();
     };
   };
 
   function reset() {
+    console.log('reset')
     turn = Player.FIRST;
     round = 0;
     Gameboard.reset();
   };
 
   function checkWinner() {
+    console.log('check winner');
     for (let i = 0; i < 9; i = i + 3) {
-      if (gameboard[i].dataset.player != 0) {
+      if (gameboard[i].dataset.player != "0") {
           if ((gameboard[i].dataset.player === gameboard[i + 1].dataset.player) && (gameboard[i + 1].dataset.player === gameboard[i + 2].dataset.player)) { //check rows
-              return true;
+            return true;
           }
       }
     }
     for (let i = 0; i < 3; i++) {
-        if (gameboard[i].dataset.player) {
+        if (gameboard[i].dataset.player != "0") {
             if ((gameboard[i].dataset.player === gameboard[i + 3].dataset.player) && (gameboard[i + 3].dataset.player === gameboard[i + 6].dataset.player)) { //check cols
-                return true;
+              return true;
             }
         }
     }
-    if (gameboard[0].dataset.player) {
-        if ((gameboard[0].dataset.player === gameboard[4].dataset.player) && (gameboard[4].dataset.player === gameboard[8].dataset.player)) {
-            return true;
+    if (gameboard[0].dataset.player != "0") {
+        if ((gameboard[0].dataset.player === gameboard[4].dataset.player) && (gameboard[4].dataset.player === gameboard[8].dataset.player)) { 
+          return true;
         }
     }
-    if (gameboard[2].dataset.player) {
+    if (gameboard[2].dataset.player != "0") {
         if ((gameboard[2].dataset.player === gameboard[4].dataset.player) && (gameboard[4].dataset.player === gameboard[6].dataset.player)) {
-            return true;
+          return true;
         }
     }
+
+    return false;
   };
 
   gameboard.forEach(cell => {
     cell.addEventListener('click', play);
+  });
+
+  modalPlayAgain = document.getElementById('modal-play-again');
+  modalPlayAgain.addEventListener('click', function() {
+    reset();
   });
 });
 
