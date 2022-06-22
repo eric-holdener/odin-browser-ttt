@@ -83,7 +83,7 @@ const Modal = (() => {
   let winnerMessage = document.createElement('h2');
   winnerMessage.classList.add('modal-title');
 
-  let playAgainButton = document.getElementById('new-game-button');
+  let playAgainButton = document.getElementById('modal-play-again');
   playAgainButton.addEventListener('click', function() {
     myModal.show();
   });
@@ -138,11 +138,20 @@ const Game = (() => {
   Gameboard.init();
   let gameboard = Gameboard.gameboard;
 
+  let currentPlayerContainer = document.getElementById('currentPlayerContainer');
+  let currentPlayerText = document.createElement('p');
+  currentPlayerText.innerHTML = 'Current Player:';
+  let currentPlayerImg = document.createElement('img');
+  currentPlayerImg.classList.add('current-player-img');
+  currentPlayerImg.src = 'assets/x.png';
+
+  currentPlayerContainer.appendChild(currentPlayerText);
+  currentPlayerContainer.appendChild(currentPlayerImg);
+
   document.getElementById('new-game-button').remove();
 
   newGameButton = document.createElement('btn');
   newGameButton.classList.add('btn');
-  newGameButton.classList.add('btn-danger');
   newGameButton.innerHTML = 'New Game';
   newGameButton.id = 'reset-game-button';
 
@@ -162,6 +171,8 @@ const Game = (() => {
             round++;
             if(checkWinner() === true) {
               Modal.displayPlayer(1);
+            } else {
+              currentPlayerImg.src = 'assets/o.png';
             };
           }
           break;
@@ -172,6 +183,8 @@ const Game = (() => {
             round++;
             if(checkWinner() === true) {
               Modal.displayPlayer(2)
+            } else {
+              currentPlayerImg.src = 'assets/x.png';
             };
           }
 
@@ -185,6 +198,7 @@ const Game = (() => {
     console.log('reset')
     turn = Player.FIRST;
     round = 0;
+    currentPlayerImg.src = 'assets/x.png';
     Gameboard.reset();
   };
 

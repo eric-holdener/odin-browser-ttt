@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Tic Tac Toe</h1>
   <div class="modal fade" id="winnerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="winnerModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -25,12 +24,29 @@
       </div>
     </div>
   </div>
-  <div class="container" id="gamecontainer"></div>
-  <div class="row">
-    <div class="col" id="game-button">
-      <button class="btn btn-primary" id="new-game-button">New Game</button>
+  <div class="container d-flex flex-column justify-content-center align-items-center" id="ttt-container">
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <h1>Tic Tac Toe</h1>
+      </div>
+    </div>
+    <div class="row pb-3">
+      <div class="col d-flex flex-column align-items-center justify-content-center" id="currentPlayerContainer">
+      </div>
+    </div>
+    <div class="row pb-3">
+      <div class="container" id="gamecontainer"></div>
+
+    </div>
+    <div class="row">
+      <div class="col d-flex justify-content-center" id="game-button">
+        <button class="btn" id="new-game-button">New Game</button>
+      </div>
     </div>
   </div>
+
+
+
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>

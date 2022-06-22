@@ -1,7 +1,11 @@
+html, body {
+  background: linear-gradient(to right, #222831, #393E46);
+}
+
 .box-styling {
   width: 100px !important;
   height: 100px !important;
-  border: 1px solid red !important;
+  border: 1px solid #00ADB5 !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
@@ -18,4 +22,44 @@
 
 .ttt-cell {
   cursor: pointer !important;
+}
+
+h1 {
+  color: #00ADB5;
+}
+
+.current-player-img {
+  width: 100px;
+  height: auto;
+}
+
+p {
+  color: #EEEEEE;
+}
+
+#new-game-button, #reset-game-button, #modal-play-again {
+  color: #00ADB5 !important;
+}
+
+#ttt-container {
+  width: auto;
+  height: 100vh;
+}
+
+.modal-content {
+  background-color: #222831 !important;
+}
+
+.modal-header {
+  color: #00ADB5 !important;
+  border-bottom-color: #00ADB5 !important;
+}
+
+.modal-text {
+  color: #EEEEEE !important;
+  border-bottom-color: #00ADB5 !important;
+}
+
+.modal-footer {
+  border-top-color: #00ADB5 !important;
 }
