@@ -74,13 +74,21 @@ const Player = (() => {
   }
 })();
 
+const Modal = (() => {
+  function displayPlayer(player) {
+
+  };
+
+  function displayTie() {
+
+  };
+
+  return { displayPlayer, displayTie };
+})();
+
 function playerFactory(name, icon, winMessage) {
   const play = function (e) {
-    console.log('play');
-    console.log(e.target);
-    console.log(e.target.dataset.player)
     if(e.target.dataset.player == 0) {
-      console.log('if statement');
       const img = e.target.querySelector('img');
       img.src = icon;
       return true;
@@ -100,6 +108,8 @@ const Game = (() => {
   let player2 = playerFactory('player 2', 'assets/o.png', 'Y wins');
   Gameboard.init();
   let gameboard = Gameboard.gameboard;
+  console.log(gameboard);
+  console.log(gameboard[0]);
 
   document.getElementById('new-game-button').remove();
 
@@ -151,7 +161,30 @@ const Game = (() => {
   };
 
   function checkWinner() {
-
+    for (let i = 0; i < 9; i = i + 3) {
+      if (gameboard[i].dataset.player != 0) {
+          if ((gameboard[i].dataset.player === gameboard[i + 1].dataset.player) && (gameboard[i + 1].dataset.player === gameboard[i + 2].dataset.player)) { //check rows
+              return true;
+          }
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+        if (gameboard[i].dataset.player) {
+            if ((gameboard[i].dataset.player === gameboard[i + 3].dataset.player) && (gameboard[i + 3].dataset.player === gameboard[i + 6].dataset.player)) { //check cols
+                return true;
+            }
+        }
+    }
+    if (gameboard[0].dataset.player) {
+        if ((gameboard[0].dataset.player === gameboard[4].dataset.player) && (gameboard[4].dataset.player === gameboard[8].dataset.player)) {
+            return true;
+        }
+    }
+    if (gameboard[2].dataset.player) {
+        if ((gameboard[2].dataset.player === gameboard[4].dataset.player) && (gameboard[4].dataset.player === gameboard[6].dataset.player)) {
+            return true;
+        }
+    }
   };
 
   gameboard.forEach(cell => {
